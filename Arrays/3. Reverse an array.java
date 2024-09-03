@@ -22,34 +22,30 @@
 
 
 // Intuition:
-// To reverse an array, the objective is to reorder the elements such that the last element becomes the first and the second last becomes the second, 
-// and so forth. The straightforward approach involves creating a new array of the same size and populating it by iterating through the input array from end to start, 
-// thereby storing elements in reverse order.
+// To reverse an array in place without additional space, employ a swapping technique utilizing two pointers: 
+// one starting from the beginning of the array and the other from the end. By exchanging the elements at these pointers and progressively moving them toward the center, 
+// the array can be reversed efficiently within the same memory allocation. This method is both space-efficient and effective.
 
 // Approach:
-// Declare a new array having the same size as the input array.
-// Iterate through the input array from the end to the beginning and for each element in the input array, store it in the corresponding position in the new array.
-// After the loop ends, the new array will contain the reversed elements.
-// Copy the elements back to the original array to get the reversed array.
+// Initialize a pointer p1 at the first index and another pointer p2 at the last index of the array.
+// Swap the elements pointed by p1 and p2 and increment p1 by 1 while decrementing p2 by 1 simultaneously.
+// Repeat the process for the first n/2 elements, where n is the length of the array.
 
 import java.util.Arrays;
  
 class Solution {
-    // Function to reverse array using an auxiliary array
-    public void reverse(int arr[], int n) {
-        int[] ans = new int[n];
-        
-        /* Fill new array with elements of 
-        original array in reverse order */
-        for (int i = n - 1; i >= 0; i--) {
-            ans[n - i - 1] = arr[i];
+    // Function to reverse array using two pointers
+    public void reverse(int[] arr, int n) {
+        int p1 = 0, p2 = n - 1;
+        /* Swap elements pointed by p1 and 
+        p2 until they meet in the middle */
+        while (p1 < p2) {
+            int tmp = arr[p1];
+            arr[p1] = arr[p2];
+            arr[p2] = tmp;
+            p1++;
+            p2--;
         }
-        
-        // Copy the elements back to the original array
-        for(int i = 0; i < n; i++) {
-            arr[i] = ans[i];
-        }
-        
         // Return
         return;
     }
@@ -81,6 +77,6 @@ class Main {
 }
 
 // Complexity Analysis:
-// Time Complexity: O(N), A single-pass of the array with N elements is being done to reverse the array.
+// Time Complexity: O(N), A single-pass of the array with N elements is being done to reverse the array
 
-// Space Complexity: O(N), for the extra array of the same size used.
+// Space Complexity: O(1), no extra data structure is being used so no extra space.
